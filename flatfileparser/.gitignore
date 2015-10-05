@@ -13,17 +13,10 @@
 *.iml
 *.iws
 *.xml
-Libraries
 bin
 gradle
 build
 out
-build.gradle
-gradlew
-gradlew.bat
-settings.gradle
-
-
 
 # Log #
 ######################
