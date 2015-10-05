@@ -11,12 +11,25 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+}
+
+jar {
+    from {
+        (configurations.runtime).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes("Main-Class": "com.expicient.integration.Processor" )
+    }
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -29,4 +42,20 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+}
+
+pmd {
+    consoleOutput = false
+    ignoreFailures = true
+    ruleSets = [ "java-basic", "java-strings", "java-braces" ]
+}
+
+findbugs {
+    toolVersion = "2.0.1"
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "high"
+    visitors = ["FindSqlInjection", "SwitchFallthrough"]
+    omitVisitors = ["FindNonShortCircuit"]
+    includeFilter = file("$rootProject.projectDir/config/findbugs/exin_findbugs_ruleset.xml")
 }
