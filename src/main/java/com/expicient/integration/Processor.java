@@ -26,23 +26,28 @@ public class Processor {
 			String datafileLocation = args[1];
 			String outputDatafileLocation = args[2];
 			String delimiter = args[3];
+			String flag_lengthorEnd = args[4];
 
 			// Validate the input and throw errors
 
-			if (!isFilePathValid(schemaFileLocation)){
+			if (!isFilePathValid(schemaFileLocation)) {
 				throw new FileNotFoundException("Please validate the path of schema file!");
 			}
 
-			if (!isFilePathValid(datafileLocation)){
+			if (!isFilePathValid(datafileLocation)) {
 				throw new FileNotFoundException("Please validate the path of flat file!");
 			}
 
-			if (!isFilePathValid(outputDatafileLocation)){
+			if (!isFilePathValid(outputDatafileLocation)) {
 				throw new FileNotFoundException("Please validate the path of output JSON!");
 			}
 
-			if (!isDelimiterValid(delimiter)){
+			if (!isDelimiterValid(delimiter)) {
 				throw new IllegalArgumentException("Please specify one special symbol as delimiter!");
+			}
+
+			if (!flag_lengthorEnd.equals("length") && !flag_lengthorEnd.equals("endpoint")) {
+				throw new IllegalArgumentException("Please enter either length or endpoint!");
 			}
 
 
@@ -54,11 +59,8 @@ public class Processor {
 
 			// Parse the schema and load it into an array list
 			ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
-			for (CSVRecord csvRecord : parser) {
-				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
-						.parseInt(csvRecord.get(1)), Integer.parseInt(csvRecord
-						.get(2))));
-			}
+
+			flatFileSchema = parseSchema(flag_lengthorEnd, parser);
 
 			// Start reading the data file and use schema structure to convert it
 			ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<LinkedHashMap<String, String>>();
@@ -74,9 +76,10 @@ public class Processor {
 
 			// Generate output in json
 			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-	        FileWriter writer = new FileWriter(outputDatafileLocation);
-	        writer.write(gson.toJson(outputDataStructure));
-	        writer.close();			
+			FileWriter writer = new FileWriter(outputDatafileLocation);
+			writer.write(gson.toJson(outputDataStructure));
+			writer.close();
+
 		} catch (IOException | IllegalArgumentException e) {
 
 			e.printStackTrace();
@@ -84,31 +87,29 @@ public class Processor {
 	}
 
 	private static void parseRecordAndFillData(ArrayList<FlatFileSchema> flatFileSchema,
-			ArrayList<LinkedHashMap<String, String>> outputDataStructure,
-			String line) {
+											   ArrayList<LinkedHashMap<String, String>> outputDataStructure,
+											   String line) {
 
 		LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
 		for (FlatFileSchema schema : flatFileSchema) {
-			data.put(schema.getFieldName(), 
-					line.substring(schema.getStartPosition(), 
+			data.put(schema.getFieldName(),
+					line.substring(schema.getStartPosition(),
 							schema.getStartPosition() + schema.getLength()));
-		}	
+		}
 		outputDataStructure.add(data);
 	}
 
-	public static boolean isFilePathValid(String file) throws IOException{
+	public static boolean isFilePathValid(String file) throws IOException {
 		File filepath = new File(file);
 		String path = "";
-		try{
+		try {
 			path = filepath.getCanonicalPath();
 			if (filepath.exists() && filepath.isFile()) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
-		}
-		catch(IOException ex){
+		} catch (IOException ex) {
 			ex.printStackTrace();
 			return false;
 		}
@@ -116,12 +117,30 @@ public class Processor {
 
 	public static boolean isDelimiterValid(String delimiter) {
 
-		if (delimiter.length() == 1 && delimiter.matches("[^A-Z0-9a-z]")){
+		if (delimiter.length() == 1 && delimiter.matches("[^A-Z0-9a-z]")) {
 
 			return true;
 
-		}else{
+		} else {
 			return false;
 		}
+	}
+
+	public static ArrayList<FlatFileSchema> parseSchema(String flag, CSVParser parser) {
+
+		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
+		if (flag.equals("length")) {
+			for (CSVRecord csvRecord : parser) {
+				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer.parseInt(csvRecord.get(1)),
+						Integer.parseInt(csvRecord.get(2))));
+			}
+		} else {
+			for (CSVRecord csvRecord : parser) {
+				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer.parseInt(csvRecord.get(1)),
+						(Integer.parseInt(csvRecord.get(2)) - Integer.parseInt(csvRecord.get(1)))));
+				//Length = Endpoint - Startpoint
+			}
+		}
+		return flatFileSchema;
 	}
 }
