@@ -1,0 +1,40 @@
+# Compiled source #
+###################
+*.class
+
+#project commits
+################
+.gradle
+.settings
+.idea
+.project
+.classpath
+*.ipr
+*.iml
+*.iws
+*.xml
+Libraries
+bin
+gradle
+build
+out
+build.gradle
+gradlew
+gradlew.bat
+settings.gradle
+
+
+
+# Log #
+######################
+*.log
+ 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
