@@ -14,6 +14,22 @@ apply plugin: 'idea'
 apply plugin: 'pmd'
 apply plugin: 'findbugs'
 
+pmd {
+    consoleOutput = false
+    ignoreFailures = true
+    ruleSets = [ "java-basic", "java-strings", "java-braces" ]
+}
+
+findbugs {
+    toolVersion = "2.0.1"
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "high"
+    visitors = ["FindSqlInjection", "SwitchFallthrough"]
+    omitVisitors = ["FindNonShortCircuit"]
+    includeFilter = file("$rootProject.projectDir/config/findbugs/exin_findbugs_ruleset.xml")
+}
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use 'jcenter' for resolving your dependencies.
@@ -42,20 +58,4 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
-}
-
-pmd {
-    consoleOutput = false
-    ignoreFailures = true
-    ruleSets = [ "java-basic", "java-strings", "java-braces" ]
-}
-
-findbugs {
-    toolVersion = "2.0.1"
-    ignoreFailures = true
-    effort = "max"
-    reportLevel = "high"
-    visitors = ["FindSqlInjection", "SwitchFallthrough"]
-    omitVisitors = ["FindNonShortCircuit"]
-    includeFilter = file("$rootProject.projectDir/config/findbugs/exin_findbugs_ruleset.xml")
 }
