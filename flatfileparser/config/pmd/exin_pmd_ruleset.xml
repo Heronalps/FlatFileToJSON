@@ -1,0 +1,1013 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>  
+ <rule ref="rulesets/design.xml">
+	<exclude name="AbstractClassWithoutAbstractMethod"/>
+	<exclude name="PositionLiteralsFirstInComparisons" />
+	<exclude name="ConfusingTernary" />	
+	<exclude name="AvoidSynchronizedAtMethodLevel" />
+	<exclude name="SimplifyBooleanReturns" />	
+	<exclude name="UseSingleton" />
+	<exclude name="AvoidReassigningParameters" />
+	<exclude name="AbstractClassWithoutAnyMethod"/>
+	<exclude name="AccessorClassGeneration"/>
+	<exclude name="AssignmentToNonFinalStatic"/>
+	<exclude name="AvoidConstantsInterface"/>
+	<exclude name="AvoidDeeplyNestedIfStmts"/>
+	<exclude name="AvoidInstanceofChecksInCatchClause"/>
+	<exclude name="BadComparison"/>
+	<exclude name="ClassWithOnlyPrivateConstructorsShouldBeFinal"/>
+	<exclude name="CloseResource"/>
+	<exclude name="CompareObjectsWithEquals"/>
+	<exclude name="ConstructorCallsOverridableMethod"/>
+	<exclude name="DefaultLabelNotLastInSwitchStmt"/>
+	<exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+	<exclude name="EqualsNull"/>
+	<exclude name="FinalFieldCouldBeStatic"/>
+	<exclude name="IdempotentOperations"/>
+	<exclude name="InstantiationToGetClass"/>
+	<exclude name="MissingBreakInSwitch"/>
+	<exclude name="MissingStaticMethodInNonInstantiatableClass"/>
+	<exclude name="NonCaseLabelInSwitchStatement"/>
+	<exclude name="NonStaticInitializer"/>
+	<exclude name="NonThreadSafeSingleton"/>
+	<exclude name="OptimizableToArrayCall"/>
+	<exclude name="PreserveStackTrace"/>
+	<exclude name="ReturnEmptyArrayRatherThanNull"/>
+	<exclude name="SimpleDateFormatNeedsLocale"/>
+	<exclude name="SimplifyConditional"/>
+	<exclude name="SingularField"/>
+	<exclude name="SwitchDensity"/>
+	<exclude name="SwitchStmtsShouldHaveDefault"/>
+	<exclude name="TooFewBranchesForASwitchStatement"/>
+	<exclude name="UncommentedEmptyConstructor"/>
+	<exclude name="UncommentedEmptyMethod"/>
+	<exclude name="UnnecessaryLocalBeforeReturn"/>
+	<exclude name="UnsynchronizedStaticDateFormatter"/>
+	<exclude name="UseCollectionIsEmpty"/>
+	<exclude name="UseLocaleWithCaseConversions"/>
+	<exclude name="UseNotifyAllInsteadOfNotify"/>
+	<exclude name="AvoidProtectedFieldInFinalClass"/>
+	<exclude name="SimplifyBooleanExpressions"/>
+	<exclude name="AbstractClassWithoutAbstractMethod"/>
+  </rule>
+ <rule ref="rulesets/codesize.xml">
+	<exclude name="ExcessivePublicCount" />
+	<exclude name="CyclomaticComplexity"/>
+	<exclude name="ExcessiveClassLength"/>
+	<exclude name="NPathComplexity"/>
+	<exclude name="NcssConstructorCount"/>
+	<exclude name="NcssMethodCount"/>
+	<exclude name="NcssTypeCount"/>
+	<exclude name="TooManyFields"/>
+	<exclude name="TooManyMethods"/>
+	<exclude name="ExcessiveMethodLength"/><!-- MethodLength with 80 is avaiable in checkstyle -->
+  </rule>
+ <rule ref="rulesets/naming.xml">
+	<exclude name="AbstractNaming" />
+	<exclude name="BooleanGetMethodName"/>
+	<exclude name="LongVariable"/>
+	<exclude name="AvoidDollarSigns"/>
+	<exclude name="AvoidFieldNameMatchingMethodName"/>
+	<exclude name="AvoidFieldNameMatchingTypeName"/>
+	<exclude name="ClassNamingConventions"/>
+	<exclude name="MethodNamingConventions"/>
+	<exclude name="MethodWithSameNameAsEnclosingClass"/>
+	<exclude name="MisleadingVariableName"/>
+	<exclude name="ShortMethodName"/>
+	<exclude name="SuspiciousHashcodeMethodName"/>
+	<exclude name="SuspiciousConstantFieldName"/>
+	<exclude name="SuspiciousEqualsMethodName"/>
+	<exclude name="VariableNamingConventions"/>
+	<exclude name="NoPackage"/>
+	<exclude name="PackageCase"/>
+	<exclude name="ShortVariable"/>
+  </rule>
+ <rule ref="rulesets/imports.xml">
+	<exclude name="DontImportJavaLang" />
+	<exclude name="DuplicateImports" />
+	<exclude name="ImportFromSamePackage" />
+	<exclude name="TooManyStaticImports" />
+	
+ </rule>
+ <rule ref="rulesets/controversial.xml">  
+	<exclude name="AvoidFinalLocalVariable" />
+	<exclude name="AvoidLiteralsInIfCondition" />
+	<exclude name="OnlyOneReturn" />
+	<exclude name="UnnecessaryParentheses" /> 
+	<exclude name="UseConcurrentHashMap" /> 
+	<exclude name="DataflowAnomalyAnalysis"/>
+	<exclude name="UnusedModifier"/>	
+	<exclude name="UseObjectForClearerAPI" />
+	<exclude name="AtLeastOneConstructor" />		
+	<exclude name="ExcessiveParameterList" />		
+	<exclude name="AvoidUsingVolatile" />		
+	<exclude name="AssignmentInOperand"/>
+	<exclude name="AvoidAccessibilityAlteration"/>
+	<exclude name="AvoidUsingNativeCode"/>
+	<exclude name="BooleanInversion"/>
+	<exclude name="DoNotCallGarbageCollectionExplicitly"/>
+	<exclude name="DontImportSun"/>
+	<exclude name="NullAssignment"/>
+	<exclude name="SuspiciousOctalEscape"/>
+	<exclude name="UnnecessaryConstructor"/>
+  </rule>
+
+  <rule ref="rulesets/design.xml/AbstractClassWithoutAnyMethod">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/design.xml/AccessorClassGeneration">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/AddEmptyString">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/strings.xml/AppendCharacterWithChar">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/AssignmentInOperand">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/AssignmentToNonFinalStatic">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/AvoidAccessibilityAlteration">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/AvoidArrayLoops">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/AvoidCallingFinalize">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strictexception.xml/AvoidCatchingNPE">
+    <priority>3</priority>
+  </rule>   
+  <rule ref="rulesets/design.xml/AvoidConstantsInterface">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/AvoidDecimalLiteralsInBigDecimalConstructor">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/AvoidDeeplyNestedIfStmts">
+    <priority>3</priority>
+	<properties>
+		<property name="problemDepth" description="The if statement depth reporting threshold" value="4"/>
+	</properties>	
+  </rule>
+  <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals">
+    <priority>3</priority>
+	<properties>
+            <property name="skipAnnotations" value="true"/>
+    </properties>
+  </rule>
+  <rule ref="rulesets/logging-java.xml/AvoidPrintStackTrace">
+    <priority>3</priority>
+  </rule>  
+  <rule ref="rulesets/strings.xml/AvoidStringBufferField">
+    <priority>3</priority>
+  </rule>
+   <rule ref="rulesets/basic.xml/AvoidThreadGroup">
+    <priority>2</priority>
+  </rule>  
+  <rule ref="rulesets/basic.xml/AvoidUsingHardCodedIP">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/AvoidUsingNativeCode">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/AvoidInstanceofChecksInCatchClause">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/AvoidMultipleUnaryOperators">
+    <priority>3</priority>
+  </rule>
+  <!--
+   <rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops">
+    <priority>4</priority>
+  </rule>-->
+  <rule ref="rulesets/design.xml/BadComparison">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/BigIntegerInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/BooleanGetMethodName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/BooleanInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/BooleanInversion">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/BrokenNullCheck">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/CheckResultSet">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/ClassCastExceptionWithToArray">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/ClassWithOnlyPrivateConstructorsShouldBeFinal">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/CloseResource">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+    <priority>3</priority>
+	<properties>
+            <property name="reportLevel" value="15" />
+        </properties>
+  </rule>
+  <rule ref="rulesets/basic.xml/CollapsibleIfStatements">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/CompareObjectsWithEquals">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/coupling.xml/CouplingBetweenObjects">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/DefaultLabelNotLastInSwitchStmt">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/j2ee.xml/DoNotCallSystemExit">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/controversial.xml/DoNotCallGarbageCollectionExplicitly">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/imports.xml/DontImportJavaLang">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/DontImportSun">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/DoubleCheckedLocking">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/imports.xml/DuplicateImports">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyCatchBlock">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/EmptyFinalizer">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyFinallyBlock">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyIfStmt">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/EmptyMethodInAbstractClassShouldBeAbstract">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyStatementNotInLoop">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyStaticInitializer">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptySwitchStatements">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptySynchronizedBlock">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyTryBlock">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/EmptyWhileStmt">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/EqualsNull">
+    <priority>2</priority>
+  </rule> 
+  <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/FinalizeDoesNotCallSuperFinalize">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/FinalizeOnlyCallsSuperFinalize">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/FinalizeOverloaded">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/finalizers.xml/FinalizeShouldBeProtected">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/ForLoopShouldBeWhileLoop">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/braces.xml/ForLoopsMustUseBraces">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/IdempotentOperations">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/braces.xml/IfElseStmtsMustUseBraces">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/braces.xml/IfStmtsMustUseBraces">
+    <priority>3</priority>
+  </rule>
+    <rule ref="rulesets/imports.xml/ImportFromSamePackage">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/InefficientEmptyStringCheck">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/InefficientStringBuffering">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/InstantiationToGetClass">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/IntegerInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/ByteInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/LongInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/ShortInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/JumbledIncrementer">
+    <priority>3</priority>
+  </rule>
+   <rule ref="rulesets/logging-java.xml/LoggerIsNotStaticFinal">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/LongVariable">
+    <priority>3</priority>
+    <properties>
+      <property name="minimum" value="40" />
+    </properties>
+  </rule>
+  <rule ref="rulesets/coupling.xml/LooseCoupling">
+    <priority>3</priority>
+  </rule>
+   <rule ref="rulesets/basic.xml/MisplacedNullCheck">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/MissingBreakInSwitch">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/javabeans.xml/MissingSerialVersionUID">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/MissingStaticMethodInNonInstantiatableClass">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/NPathComplexity">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/AvoidDollarSigns">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingMethodName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/AvoidFieldNameMatchingTypeName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/ClassNamingConventions">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/MethodNamingConventions">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/MethodWithSameNameAsEnclosingClass">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/MisleadingVariableName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/ShortMethodName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/SuspiciousHashcodeMethodName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/SuspiciousConstantFieldName">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/SuspiciousEqualsMethodName">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/VariableNamingConventions">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/NcssConstructorCount">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/NcssMethodCount">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/NcssTypeCount">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/NoPackage">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/NonCaseLabelInSwitchStatement">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/NonStaticInitializer">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/NonThreadSafeSingleton">
+    <priority>3</priority>
+  </rule>  
+  <rule ref="rulesets/design.xml/OptimizableToArrayCall">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/OverrideBothEqualsAndHashcode">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/PackageCase">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/PreserveStackTrace">
+    <priority>3</priority>
+  </rule>
+ 
+  <rule ref="rulesets/clone.xml/ProperCloneImplementation">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/ReplaceEnumerationWithIterator">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/ReplaceHashtableWithMap">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/migrating.xml/ReplaceVectorWithList">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/ReturnFromFinallyBlock">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/ReturnEmptyArrayRatherThanNull">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/naming.xml/ShortVariable">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/design.xml/SimpleDateFormatNeedsLocale">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/SimplifyConditional">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/SimplifyStartsWith">
+    <priority>4</priority>
+  </rule>
+ 
+  <rule ref="rulesets/design.xml/SingularField">
+    <priority>4</priority>
+  </rule>  
+  <rule ref="rulesets/strings.xml/StringBufferInstantiationWithChar">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/StringInstantiation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/StringToString">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/SuspiciousOctalEscape">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/SwitchDensity">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/logging-java.xml/SystemPrintln">
+    <priority>3</priority>
+  </rule>
+    <rule ref="rulesets/codesize.xml/TooManyFields">
+    <priority>3</priority>
+	<properties>
+       <property name="maxfields" description="The field count reporting threshold " value="60"/>
+      </properties>
+
+  </rule> 
+  <rule ref="rulesets/design.xml/TooFewBranchesForASwitchStatement">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/codesize.xml/TooManyMethods">
+    <priority>3</priority>
+	<properties>
+       <property name="maxmethods" description="The field count reporting threshold " value="15"/>
+      </properties>
+  </rule>
+  <rule ref="rulesets/design.xml/UncommentedEmptyConstructor">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/UncommentedEmptyMethod">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UnconditionalIfStatement">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/UnnecessaryCaseChange">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UnnecessaryConversionTemporary">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UnnecessaryFinalModifier">
+    <priority>5</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/UnnecessaryLocalBeforeReturn">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UnnecessaryReturn">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/UnnecessaryWrapperObjectCreation">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/controversial.xml/UnnecessaryConstructor">
+    <priority>3</priority>
+  </rule>  
+  <rule ref="rulesets/design.xml/UnsynchronizedStaticDateFormatter">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UnusedNullCheckInEquals">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/unusedcode.xml/UnusedPrivateField">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter">
+    <priority>3</priority>
+  </rule> 
+  <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/optimizations.xml/UseArraysAsList">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/UseCollectionIsEmpty">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/UseEqualsToCompareStrings">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/UseIndexOfChar">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/UseLocaleWithCaseConversions">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/UseNotifyAllInsteadOfNotify">
+    <priority>3</priority>
+  </rule>
+   <rule ref="rulesets/optimizations.xml/UseStringBufferForStringAppends">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/UseStringBufferLength">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UselessOperationOnImmutable">
+    <priority>2</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/UselessOverridingMethod">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/strings.xml/UselessStringValueOf">
+    <priority>4</priority>
+  </rule>
+  <rule ref="rulesets/braces.xml/WhileLoopsMustUseBraces">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/AvoidProtectedFieldInFinalClass">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/basic.xml/AvoidUsingOctalValues">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/design.xml/SimplifyBooleanExpressions">
+    <priority>3</priority>
+  </rule>
+  <rule ref="rulesets/imports.xml/TooManyStaticImports">
+    <priority>3</priority>
+  </rule>   
+  <rule ref="rulesets/design.xml/AbstractClassWithoutAbstractMethod">
+    <priority>4</priority>
+  </rule>
+
+   <rule name="AvoidCatchingThrowable"
+   		since="1.2"
+         message="A catch statement should never catch throwable since it includes errors."
+          class="net.sourceforge.pmd.rules.strictexception.AvoidCatchingThrowable"
+          externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidCatchingThrowable">
+      <description>
+This is dangerous because it casts too wide a net; it can catch things like OutOfMemoryError.
+      </description>
+      <priority>3</priority>
+      <example>
+                <![CDATA[
+public class Foo {
+ public void bar() {
+  try {
+   // do something
+  } catch (Throwable th) {  //Should not catch throwable
+   th.printStackTrace();
+  }
+ }
+}
+                ]]>
+      </example>
+    </rule>
+
+   <rule name="SignatureDeclareThrowsException"
+   		since="1.2"
+         message="A method/constructor shouldn't explicitly throw java.lang.Exception"
+          class="net.sourceforge.pmd.rules.strictexception.ExceptionSignatureDeclaration"
+          externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#SignatureDeclareThrowsException">
+      <description>
+It is unclear which exceptions that can be thrown from the methods.
+It might be difficult to document and understand the vague interfaces.
+Use either a class derived from RuntimeException or a checked exception.
+      </description>
+      <priority>3</priority>
+      <example>
+                <![CDATA[
+public void methodThrowingException() throws Exception {
+}
+                ]]>
+      </example>
+    </rule>
+
+    <rule name="ExceptionAsFlowControl"
+    		 since="1.8"
+          message="Avoid using exceptions as flow control."
+          class="net.sourceforge.pmd.rules.design.ExceptionAsFlowControl"
+          externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#ExceptionAsFlowControl">
+      <description>
+          Using Exceptions as flow control leads to GOTOish code and obscures true exceptions when debugging.
+      </description>
+        <priority>3</priority>
+      <example>
+  <![CDATA[
+public class Foo {
+ void bar() {
+  try {
+   try {
+   } catch (Exception e) {
+    throw new WrapperException(e);
+    // this is essentially a GOTO to the WrapperException catch block
+   }
+  } catch (WrapperException e) {
+   // do some more stuff
+  }
+ }
+}
+  ]]>
+      </example>
+    </rule>
+
+
+
+  <rule name="AvoidThrowingRawExceptionTypes"
+      since="1.8"
+      message="Avoid throwing raw exception types."
+      class="net.sourceforge.pmd.rules.XPathRule"
+          externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidThrowingRawExceptionTypes">
+    <description>
+Avoid throwing certain exception types. Rather than throw a raw RuntimeException, Throwable,
+Exception, or Error, use a subclassed exception or error instead.
+    </description>
+    <priority>1</priority>
+    <properties>
+      <property name="xpath">
+        <value>
+            <![CDATA[
+//AllocationExpression
+ /ClassOrInterfaceType[
+ (@Image='Throwable' and count(//ImportDeclaration/Name[ends-with(@Image,'Throwable')]) = 0)
+or
+ (@Image='Exception' and count(//ImportDeclaration/Name[ends-with(@Image,'Exception')]) = 0)
+or
+ (@Image='Error'  and count(//ImportDeclaration/Name[ends-with(@Image,'Error')]) = 0)
+or
+( @Image='RuntimeException'  and count(//ImportDeclaration/Name[ends-with(@Image,'RuntimeException')]) = 0)
+]
+ ]]>
+        </value>
+      </property>
+    </properties>
+    <example>
+      <![CDATA[
+public class Foo {
+public void bar() throws Exception {
+  throw new Exception();
+ }
+}
+]]>
+    </example>
+  </rule>
+
+    <rule name="AvoidThrowingNullPointerException"
+    	  since="1.8"
+        message="Avoid throwing null pointer exceptions."
+        class="net.sourceforge.pmd.rules.XPathRule"
+          externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidThrowingNullPointerException">
+      <description>
+Avoid throwing a NullPointerException - it's confusing because most people will assume that the
+virtual machine threw it. Consider using an IllegalArgumentException instead; this will be
+clearly seen as a programmer-initiated exception.
+      </description>
+      <priority>1</priority>
+      <properties>
+        <property name="xpath">
+          <value>
+              <![CDATA[
+//AllocationExpression/ClassOrInterfaceType[@Image='NullPointerException']
+   ]]>
+          </value>
+        </property>
+      </properties>
+      <example>
+        <![CDATA[
+public class Foo {
+ void bar() {
+  throw new NullPointerException();
+ }
+}
+  ]]>
+      </example>
+    </rule>
+
+  <rule name="AvoidRethrowingException"
+    since="3.8"
+    message="A catch statement that catches an exception only to rethrow it should be avoided."
+    class="net.sourceforge.pmd.rules.XPathRule"
+    externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidRethrowingException">
+    <description>
+     Catch blocks that merely rethrow a caught exception only add to code size and runtime complexity.
+    </description>
+    <priority>3</priority>
+    <properties>
+        <property name="xpath">
+            <value>
+                <![CDATA[
+//CatchStatement[FormalParameter
+ /VariableDeclaratorId/@Image = Block/BlockStatement/Statement
+ /ThrowStatement/Expression/PrimaryExpression[count(PrimarySuffix)=0]/PrimaryPrefix/Name/@Image
+ and count(Block/BlockStatement/Statement) =1]
+ ]]>
+            </value>
+        </property>
+    </properties>
+    <example>  <![CDATA[
+  public class Foo {
+   void bar() {
+    try {
+    // do something
+    }  catch (SomeException se) {
+       throw se;
+    }
+   }
+  }
+  ]]>
+    </example>
+  </rule>
+
+  <rule
+    name="DoNotExtendJavaLangError"
+    since="4.0"
+    message="Exceptions should not extend java.lang.Error"
+    class="net.sourceforge.pmd.rules.XPathRule"
+    externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#DoNotExtendJavaLangError">
+    <description>
+      <![CDATA[
+        Errors are system exceptions. Do not extend them.
+      ]]>
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="xpath">
+        <value>
+          <![CDATA[
+//ClassOrInterfaceDeclaration/ExtendsList/ClassOrInterfaceType
+  [@Image="Error" or @Image="java.lang.Error"]
+          ]]>
+        </value>
+      </property>
+    </properties>
+    <example><![CDATA[
+        public class Foo extends Error { }
+    ]]></example>
+  </rule>
+
+	<rule	name="DoNotThrowExceptionInFinally"
+	       since="4.2"
+		    message="A throw statement in a finally block makes the control flow hard to understand."
+		    class="net.sourceforge.pmd.rules.XPathRule"
+		    externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#DoNotThrowExceptionInFinally">
+    	<description>
+			<![CDATA[
+			      Throwing exception in a finally block is confusing. It may mask exception or a defect of the code,
+			      it also render code cleanup uninstable.
+			Note: This is a PMD implementation of the Lint4j rule "A throw in a finally block"
+			]]>
+		</description>
+    	<priority>4</priority>
+    	<properties>
+			<property name="xpath">
+			  <value>
+			    <![CDATA[
+//FinallyStatement[descendant::ThrowStatement]
+			          ]]>
+			  </value>
+			</property>
+		</properties>
+    	<example>
+    		<![CDATA[
+				public class Foo 
+				{
+					public void bar()
+					{
+						try {
+							// Here do some stuff
+						}
+						catch( Exception e) {
+							// Handling the issue
+						}
+						finally 
+						{
+							// is this really a good idea ?
+							throw new Exception();
+						}
+					}
+				}
+	    	]]>
+    	</example>
+    </rule>
+
+  <rule name="AvoidThrowingNewInstanceOfSameException"
+    since="4.2.5"
+    message="A catch statement that catches an exception only to wrap it in a new instance of the same type of exception and throw it should be avoided"
+    externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidThrowingNewInstanceOfSameException"
+    class="net.sourceforge.pmd.rules.XPathRule">
+    <description>
+     Catch blocks that merely rethrow a caught exception wrapped inside a new instance of the same type only add to code size and runtime complexity.
+    </description>
+    <priority>3</priority>
+    <properties>
+    <property name="xpath">
+      <value>
+        <![CDATA[
+//CatchStatement[
+  count(Block/BlockStatement/Statement) = 1
+  and
+  FormalParameter/Type/ReferenceType/ClassOrInterfaceType/@Image = Block/BlockStatement/Statement/ThrowStatement/Expression/PrimaryExpression/PrimaryPrefix/AllocationExpression/ClassOrInterfaceType/@Image
+  and
+  count(Block/BlockStatement/Statement/ThrowStatement/Expression/PrimaryExpression/PrimaryPrefix/AllocationExpression/Arguments/ArgumentList/Expression) = 1
+  and
+  FormalParameter/VariableDeclaratorId = Block/BlockStatement/Statement/ThrowStatement/Expression/PrimaryExpression/PrimaryPrefix/AllocationExpression/Arguments/ArgumentList/Expression/PrimaryExpression/PrimaryPrefix/Name
+  ]
+ ]]>
+      </value>
+    </property>
+    </properties>    
+    <example>  <![CDATA[
+    public class Foo {
+     void bar() {
+      try {
+       // do something
+      }  catch (SomeException se) {
+         // harmless comment      
+           throw new SomeException(se);
+      }
+     }
+    }
+  ]]>
+    </example>
+  </rule>
+
+  <rule  name="AvoidCatchingGenericException"
+    since="4.2.6"
+    message="Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block"
+    externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidCatchingGenericException"
+    class="net.sourceforge.pmd.rules.XPathRule">
+    <description>
+      Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
+    </description>
+    <priority>3</priority>
+    <properties>
+      <property name="xpath">
+      <value>
+      <![CDATA[
+        //CatchStatement/FormalParameter/Type/ReferenceType/ClassOrInterfaceType[
+          @Image='NullPointerException' or
+          @Image='Exception' or
+          @Image='RuntimeException']
+      ]]>
+      </value>
+      </property>
+    </properties>
+    <example>
+    <![CDATA[
+package com.igate.primitive;
+    
+public class PrimitiveType {
+    
+  public void downCastPrimitiveType() {
+    try {
+      System.out.println(" i [" + i + "]");
+    } catch(Exception e) {
+      e.printStackTrace();
+    } catch(RuntimeException e) {
+      e.printStackTrace();
+    } catch(NullPointerException e) {
+      e.printStackTrace();
+    }
+  } 
+}
+    ]]>
+    </example>
+  </rule>
+
+	<rule name="AvoidLosingExceptionInformation"
+		since="4.2.6"
+		message="Avoid statements in a catch block that invoke accessors on the exception without using the information"
+		externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#AvoidLosingExceptionInformation"
+		class="net.sourceforge.pmd.rules.XPathRule">
+		<description>Statements in a catch block that invoke accessors on the exception without using the information
+		only add to code size.  Either remove the invocation, or use the return result.</description>
+		<priority>2</priority>
+		<properties>
+			<property name="xpath">
+				<value>
+<![CDATA[
+//CatchStatement/Block/BlockStatement/Statement/StatementExpression/PrimaryExpression/PrimaryPrefix/Name
+[
+   @Image = concat(../../../../../../../FormalParameter/VariableDeclaratorId/@Image, '.getMessage')
+   or
+   @Image = concat(../../../../../../../FormalParameter/VariableDeclaratorId/@Image, '.getLocalizedMessage')
+   or
+   @Image = concat(../../../../../../../FormalParameter/VariableDeclaratorId/@Image, '.getCause')
+   or
+   @Image = concat(../../../../../../../FormalParameter/VariableDeclaratorId/@Image, '.getStackTrace')
+   or
+   @Image = concat(../../../../../../../FormalParameter/VariableDeclaratorId/@Image, '.toString')
+]
+]]>
+				</value>
+			</property>
+		</properties>
+		<example>
+<![CDATA[
+public class Foo {
+ void bar() {
+  try {
+   // do something
+  } catch (SomeException se) {
+    se.getMessage();
+  }
+ }
+}
+]]>
+		</example>
+	</rule>
+</ruleset>
+
