@@ -1,7 +1,6 @@
 package com.expicient.integration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -19,32 +18,34 @@ import com.google.gson.GsonBuilder;
 
 public class Processor {
 	public static void main(String[] args) {
-		// Process command line inputs
-		String schemaFileLocation = "";
-		String datafileLocation = "";
-		String outputDirLocation = "";
-		boolean flag_lengthorEnd = true;
+		// Process command line inputs with default values of optional arguments
+
 		String outputfilename = "output.json";
+		boolean flag_lengthorEnd = true;
 		boolean debug = false;
 
-		if (args.length < 3) {
+		// This is how to make arguments optional
+		if (args.length < 3 | args.length > 6 ) {
 			printMessage();
 			return;
 		} else if (args.length == 4) {
-			flag_lengthorEnd = args[3].toLowerCase().trim().equals("true") ? true
-					: false;
-		} else {
-			flag_lengthorEnd = args[3].toLowerCase().trim().equals("true") ? true
-					: false;
-			outputfilename = args[4].toLowerCase().trim();
+			outputfilename = args[3].toLowerCase().trim();
+		} else if (args.length == 5){
+			outputfilename = args[3].toLowerCase().trim();
+			flag_lengthorEnd = args[4].toLowerCase().trim().equals("true");
+		} else if (args.length == 6){
+			outputfilename = args[3].toLowerCase().trim();
+			flag_lengthorEnd = args[4].toLowerCase().trim().equals("true");
+			debug = args[5].equals("true");
 		}
 
-		// Process command line inputs
-		schemaFileLocation = args[0];
-		datafileLocation = args[1];
-		outputDirLocation = args[2];
+		// Process command line non-optional inputs
+		String schemaFileLocation = args[0];
+		String datafileLocation = args[1];
+		String outputDirLocation = args[2];
 
 		// Validate the input and throw errors
+		// Rule of thumb: Don't throw exceptions on user's face! Print out understandable indication.
 
 		if (!isValid(schemaFileLocation, true)) {
 			System.out.println("Please validate the path of schema file!");
@@ -63,17 +64,16 @@ public class Processor {
 
 		File schemaFile = new File(schemaFileLocation);
 		CSVParser parser;
-		ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<LinkedHashMap<String, String>>();
-		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
+		ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<>();
+
 		try {
 			parser = CSVParser.parse(schemaFile, Charset.defaultCharset(),
 					CSVFormat.DEFAULT);
 			// Parse the schema and load it into an array list
-			flatFileSchema = parseSchema(flag_lengthorEnd, parser);
+			ArrayList<FlatFileSchema> flatFileSchema = parseSchema(flag_lengthorEnd, parser);
 			// Start reading the data file and use schema structure to convert
 			// it
-			Scanner scanner;
-			scanner = new Scanner(new File(datafileLocation));
+			Scanner scanner = new Scanner(new File(datafileLocation));
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (line.length() > 0) {
@@ -82,11 +82,6 @@ public class Processor {
 				}
 			}
 			scanner.close();
-		} catch (FileNotFoundException fnfe) {
-			System.out.println("Unable to parse the input schema CSV: "
-					+ fnfe.getMessage());
-			if (debug)
-				fnfe.printStackTrace();
 		} catch (IOException ioe) {
 			System.out.println("Unable to parse the input schema CSV: "
 					+ ioe.getMessage());
@@ -98,9 +93,12 @@ public class Processor {
 		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 		try {
 			FileWriter writer;
-			writer = new FileWriter(outputDirLocation + "/" + outputfilename);
+
+			// System.getProperty("file.separator") makes it compatible both for Unix and Windows
+			writer = new FileWriter(outputDirLocation + System.getProperty("file.separator") + outputfilename);
 			writer.write(gson.toJson(outputDataStructure));
 			writer.close();
+			System.out.println("OUTPUT SUCCESSFUL!");
 		} catch (IOException e) {
 			System.out.println("Unable to write input data file:"
 					+ e.getMessage());
@@ -114,7 +112,7 @@ public class Processor {
 			ArrayList<LinkedHashMap<String, String>> outputDataStructure,
 			String line) {
 
-		LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
+		LinkedHashMap<String, String> data = new LinkedHashMap<>();
 		for (FlatFileSchema schema : flatFileSchema) {
 			data.put(
 					schema.getFieldName(),
@@ -127,35 +125,30 @@ public class Processor {
 	public static boolean isValid(String file, boolean isFile) {
 		File filepath = new File(file);
 		if (isFile) {
-			if (filepath.exists() && filepath.isFile()) {
-				return true;
-			} else {
-				return false;
-			}
+			return (filepath.exists() && filepath.isFile());
+
 		} else {
-			if (filepath.exists() && filepath.isDirectory()) {
-				return true;
-			} else {
-				return false;
-			}
+			return (filepath.exists() && filepath.isDirectory());
 		}
 	}
 
-	private static void printMessage() {
+
+	public static void printMessage() {
 		StringBuilder message = new StringBuilder();
-		message.append("Usage: java -jar flatfileparser.jar schema={schemalocation} datafile={datafile} outputdir={outputdirectory} outputfilename={outputfilename} schematype={schematype} debug={debug}\n");
-		message.append("schemalocation: full path of the file that contain the schema\n");
-		message.append("datafile: full path of the file that contain the flat file data\n");
-		message.append("outputdirectory: full path for the output file\n");
-		message.append("outputfilename {optional} (default: output.json): file name for the output results\n");
-		message.append("schematype {optional} (true|false) (default: true): true - length based, false - end point\n");
+		message.append("Usage: java -jar flatfileparser.jar\n[schemalocation] [datafile] [outputdirectory] [outputfilename] [schematype] [debug]\n");
+		message.append("\nschemalocation: full path of schema file\n");
+		message.append("\ndatafile: full path of flat file file\n");
+		message.append("\noutputdirectory: full path of the output JSON file\n");
+		message.append("\noutputfilename {optional} (default: output.json): file name of the output JSON\n");
+		message.append("\nschematype {optional} (true|false) (default: true): true-length based, false-endpoint based\n");
+		message.append("\ndebug {optional} (true|false) (default: false): true-print backtrace, false-not print backtrace");
 		System.out.println(message.toString());
 	}
 
 	public static ArrayList<FlatFileSchema> parseSchema(boolean flag,
 			CSVParser parser) {
 
-		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
+		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<>();
 		if (flag) {
 			for (CSVRecord csvRecord : parser) {
 				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
@@ -165,9 +158,9 @@ public class Processor {
 		} else {
 			for (CSVRecord csvRecord : parser) {
 				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
-						.parseInt(csvRecord.get(1)), (Integer
+						.parseInt(csvRecord.get(1)), Integer
 						.parseInt(csvRecord.get(2)) - Integer
-						.parseInt(csvRecord.get(1)))));
+						.parseInt(csvRecord.get(1))));
 				// Length = Endpoint - Startpoint
 			}
 		}
