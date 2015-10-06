@@ -21,7 +21,7 @@ pmd {
 }
 
 findbugs {
-    toolVersion = "2.0.1"
+    toolVersion = "3.0.0"
     ignoreFailures = true
     effort = "max"
     reportLevel = "high"

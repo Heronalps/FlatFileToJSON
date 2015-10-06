@@ -1,14 +1,13 @@
 package com.expicient.integration;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -19,52 +18,62 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Processor {
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
+		// Process command line inputs
+		String schemaFileLocation = "";
+		String datafileLocation = "";
+		String outputDirLocation = "";
+		boolean flag_lengthorEnd = true;
+		String outputfilename = "output.json";
+		boolean debug = false;
+
+		if (args.length < 3) {
+			printMessage();
+			return;
+		} else if (args.length == 4) {
+			flag_lengthorEnd = args[3].toLowerCase().trim().equals("true") ? true
+					: false;
+		} else {
+			flag_lengthorEnd = args[3].toLowerCase().trim().equals("true") ? true
+					: false;
+			outputfilename = args[4].toLowerCase().trim();
+		}
+
+		// Process command line inputs
+		schemaFileLocation = args[0];
+		datafileLocation = args[1];
+		outputDirLocation = args[2];
+
+		// Validate the input and throw errors
+
+		if (!isValid(schemaFileLocation, true)) {
+			System.out.println("Please validate the path of schema file!");
+			return;
+		}
+
+		if (!isValid(datafileLocation, true)) {
+			System.out.println("Please validate the path of flat file!");
+			return;
+		}
+
+		if (!isValid(outputDirLocation, false)) {
+			System.out.println("Please validate the path of output JSON!");
+			return;
+		}
+
+		File schemaFile = new File(schemaFileLocation);
+		CSVParser parser;
+		ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<LinkedHashMap<String, String>>();
+		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
 		try {
-			// Process command line inputs
-			String schemaFileLocation = args[0];
-			String datafileLocation = args[1];
-			String outputDatafileLocation = args[2];
-			String delimiter = args[3];
-			String flag_lengthorEnd = args[4];
-
-			// Validate the input and throw errors
-
-			if (!isFilePathValid(schemaFileLocation)) {
-				throw new FileNotFoundException("Please validate the path of schema file!");
-			}
-
-			if (!isFilePathValid(datafileLocation)) {
-				throw new FileNotFoundException("Please validate the path of flat file!");
-			}
-
-			if (!isFilePathValid(outputDatafileLocation)) {
-				throw new FileNotFoundException("Please validate the path of output JSON!");
-			}
-
-			if (!isDelimiterValid(delimiter)) {
-				throw new IllegalArgumentException("Please specify one special symbol as delimiter!");
-			}
-
-			if (!flag_lengthorEnd.equals("length") && !flag_lengthorEnd.equals("endpoint")) {
-				throw new IllegalArgumentException("Please enter either length or endpoint!");
-			}
-
-
-			File schemaFile = new File(schemaFileLocation);
-
-			char dm = delimiter.charAt(0);
-			CSVFormat fmt = CSVFormat.RFC4180.withDelimiter(dm);
-			CSVParser parser = CSVParser.parse(schemaFile, Charset.defaultCharset(), fmt);
-
+			parser = CSVParser.parse(schemaFile, Charset.defaultCharset(),
+					CSVFormat.DEFAULT);
 			// Parse the schema and load it into an array list
-			ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
-
 			flatFileSchema = parseSchema(flag_lengthorEnd, parser);
-
-			// Start reading the data file and use schema structure to convert it
-			ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<LinkedHashMap<String, String>>();
-			Scanner scanner = new Scanner(new File(datafileLocation));
+			// Start reading the data file and use schema structure to convert
+			// it
+			Scanner scanner;
+			scanner = new Scanner(new File(datafileLocation));
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (line.length() > 0) {
@@ -73,72 +82,93 @@ public class Processor {
 				}
 			}
 			scanner.close();
+		} catch (FileNotFoundException fnfe) {
+			System.out.println("Unable to parse the input schema CSV: "
+					+ fnfe.getMessage());
+			if (debug)
+				fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			System.out.println("Unable to parse the input schema CSV: "
+					+ ioe.getMessage());
+			if (debug)
+				ioe.printStackTrace();
+		}
 
-			// Generate output in json
-			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-			FileWriter writer = new FileWriter(outputDatafileLocation);
+		// Generate output in json
+		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+		try {
+			FileWriter writer;
+			writer = new FileWriter(outputDirLocation + "/" + outputfilename);
 			writer.write(gson.toJson(outputDataStructure));
 			writer.close();
-
-		} catch (IOException | IllegalArgumentException e) {
-
-			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("Unable to write input data file:"
+					+ e.getMessage());
+			if (debug)
+				e.printStackTrace();
 		}
 	}
 
-	private static void parseRecordAndFillData(ArrayList<FlatFileSchema> flatFileSchema,
-											   ArrayList<LinkedHashMap<String, String>> outputDataStructure,
-											   String line) {
+	private static void parseRecordAndFillData(
+			ArrayList<FlatFileSchema> flatFileSchema,
+			ArrayList<LinkedHashMap<String, String>> outputDataStructure,
+			String line) {
 
 		LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
 		for (FlatFileSchema schema : flatFileSchema) {
-			data.put(schema.getFieldName(),
+			data.put(
+					schema.getFieldName(),
 					line.substring(schema.getStartPosition(),
 							schema.getStartPosition() + schema.getLength()));
 		}
 		outputDataStructure.add(data);
 	}
 
-	public static boolean isFilePathValid(String file) throws IOException {
+	public static boolean isValid(String file, boolean isFile) {
 		File filepath = new File(file);
-		String path = "";
-		try {
-			path = filepath.getCanonicalPath();
+		if (isFile) {
 			if (filepath.exists() && filepath.isFile()) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return false;
-		}
-	}
-
-	public static boolean isDelimiterValid(String delimiter) {
-
-		if (delimiter.length() == 1 && delimiter.matches("[^A-Z0-9a-z]")) {
-
-			return true;
-
 		} else {
-			return false;
+			if (filepath.exists() && filepath.isDirectory()) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
-	public static ArrayList<FlatFileSchema> parseSchema(String flag, CSVParser parser) {
+	private static void printMessage() {
+		StringBuilder message = new StringBuilder();
+		message.append("Usage: java -jar flatfileparser.jar schema={schemalocation} datafile={datafile} outputdir={outputdirectory} outputfilename={outputfilename} schematype={schematype} debug={debug}\n");
+		message.append("schemalocation: full path of the file that contain the schema\n");
+		message.append("datafile: full path of the file that contain the flat file data\n");
+		message.append("outputdirectory: full path for the output file\n");
+		message.append("outputfilename {optional} (default: output.json): file name for the output results\n");
+		message.append("schematype {optional} (true|false) (default: true): true - length based, false - end point\n");
+		System.out.println(message.toString());
+	}
+
+	public static ArrayList<FlatFileSchema> parseSchema(boolean flag,
+			CSVParser parser) {
 
 		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<FlatFileSchema>();
-		if (flag.equals("length")) {
+		if (flag) {
 			for (CSVRecord csvRecord : parser) {
-				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer.parseInt(csvRecord.get(1)),
-						Integer.parseInt(csvRecord.get(2))));
+				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
+						.parseInt(csvRecord.get(1)), Integer.parseInt(csvRecord
+						.get(2))));
 			}
 		} else {
 			for (CSVRecord csvRecord : parser) {
-				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer.parseInt(csvRecord.get(1)),
-						(Integer.parseInt(csvRecord.get(2)) - Integer.parseInt(csvRecord.get(1)))));
-				//Length = Endpoint - Startpoint
+				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
+						.parseInt(csvRecord.get(1)), (Integer
+						.parseInt(csvRecord.get(2)) - Integer
+						.parseInt(csvRecord.get(1)))));
+				// Length = Endpoint - Startpoint
 			}
 		}
 		return flatFileSchema;
