@@ -2,7 +2,6 @@ package com.expicient.integration;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,33 +20,45 @@ import com.google.gson.GsonBuilder;
 public class Processor {
 	public static void main(String[] args) throws Exception {
 		try {
+
+			if(args.length < 4) {
+				printMessage();
+				return;
+			} else {
+
+			}
 			// Process command line inputs
 			String schemaFileLocation = args[0];
 			String datafileLocation = args[1];
 			String outputDatafileLocation = args[2];
-			String delimiter = args[3];
-			String flag_lengthorEnd = args[4];
+			String flag_lengthorEnd = args[3];
+			String delimiter = args[4];
 
 			// Validate the input and throw errors
 
-			if (!isFilePathValid(schemaFileLocation)) {
-				throw new FileNotFoundException("Please validate the path of schema file!");
+			if (!isValid(schemaFileLocation, true)) {
+				System.out.println("Please validate the path of schema file!");
+				return;
 			}
 
-			if (!isFilePathValid(datafileLocation)) {
-				throw new FileNotFoundException("Please validate the path of flat file!");
+			if (!isValid(datafileLocation, true)) {
+				System.out.println("Please validate the path of flat file!");
+				return;
 			}
 
-			if (!isFilePathValid(outputDatafileLocation)) {
-				throw new FileNotFoundException("Please validate the path of output JSON!");
-			}
-
-			if (!isDelimiterValid(delimiter)) {
-				throw new IllegalArgumentException("Please specify one special symbol as delimiter!");
+			if (!isValid(outputDatafileLocation, false)) {
+				System.out.println("Please validate the path of output JSON!");
+				return;
 			}
 
 			if (!flag_lengthorEnd.equals("length") && !flag_lengthorEnd.equals("endpoint")) {
-				throw new IllegalArgumentException("Please enter either length or endpoint!");
+				System.out.println("Please enter either length or endpoint!");
+				return;
+			}
+
+			if (!isDelimiterValid(delimiter)) {
+				System.out.println("Please specify one special symbol as delimiter!");
+				return;
 			}
 
 
@@ -99,20 +110,28 @@ public class Processor {
 		outputDataStructure.add(data);
 	}
 
-	public static boolean isFilePathValid(String file) throws IOException {
+	public static boolean isValid(String file, boolean isFile) throws IOException {
 		File filepath = new File(file);
-		String path = "";
-		try {
-			path = filepath.getCanonicalPath();
+		if(isFile) {
 			if (filepath.exists() && filepath.isFile()) {
 				return true;
 			} else {
 				return false;
 			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return false;
+		} else {
+			if (filepath.exists() && filepath.isDirectory()) {
+				return true;
+			} else {
+				return false;
+			}
 		}
+	}
+
+	private static void printMessage() {
+		StringBuilder message = new StringBuilder();
+		message.append("Usage: java -jar flatfileparser.jar {schemalocation} {datafile} {outputlocation} {delimeter} {schematype}\n");
+		message.append("schemalocation: full path of the file that contain the schema\n");
+		System.out.println(message.toString());
 	}
 
 	public static boolean isDelimiterValid(String delimiter) {
