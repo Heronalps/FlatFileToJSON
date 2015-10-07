@@ -35,7 +35,6 @@ is rigth now held as a commandline tool and, in the future versions, will be a h
 
 ## Features in progress
 
-* JUnit Test Cases - PMD, Findbugs
 * Capability for copebook in cobol format used in most mainstream programs
 * Support for dynamic components in byte system
 * To be a hosted service

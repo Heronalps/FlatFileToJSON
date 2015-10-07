@@ -90,7 +90,14 @@ public class Processor {
 		}
 
 		// Generate output in json
-		Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+
+		Gson gson = null;
+		boolean prettyprint = true;
+		if(prettyprint) {
+			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+		} else {
+			gson = new GsonBuilder().disableHtmlEscaping().create();
+		}
 		try {
 			FileWriter writer;
 
