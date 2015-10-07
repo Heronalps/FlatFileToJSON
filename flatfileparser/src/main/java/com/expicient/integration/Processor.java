@@ -93,6 +93,7 @@ public class Processor {
 
 		Gson gson = null;
 		boolean prettyprint = true;
+
 		if(prettyprint) {
 			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 		} else {
