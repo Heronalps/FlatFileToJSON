@@ -107,7 +107,7 @@ public class Processor {
 		}
 	}
 
-	private static void parseRecordAndFillData(
+	public static void parseRecordAndFillData(
 			ArrayList<FlatFileSchema> flatFileSchema,
 			ArrayList<LinkedHashMap<String, String>> outputDataStructure,
 			String line) {
