@@ -11,6 +11,8 @@ import java.util.Scanner;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 
 import com.expicient.integration.schema.FlatFileSchema;
 import com.google.gson.Gson;
@@ -18,62 +20,44 @@ import com.google.gson.GsonBuilder;
 
 public class Processor {
 	public static void main(String[] args) {
-		// Process command line inputs with default values of optional arguments
-
-		String outputfilename = "output.json";
-		boolean flag_lengthorEnd = true;
-		boolean debug = false;
-
-		// This is how to make arguments optional
-		if (args.length < 3 | args.length > 6 ) {
-			printMessage();
+		FlatFileParserOptions ffpOptions = new FlatFileParserOptions();
+		CmdLineParser cmdLineParser = new CmdLineParser(ffpOptions);
+		try {
+			cmdLineParser.parseArgument(args);
+		} catch (CmdLineException cle) {
+			// handling of wrong arguments
+			System.err.println(cle.getMessage());
+			cmdLineParser.printUsage(System.err);
 			return;
-		} else if (args.length == 4) {
-			outputfilename = args[3].toLowerCase().trim();
-		} else if (args.length == 5){
-			outputfilename = args[3].toLowerCase().trim();
-			flag_lengthorEnd = args[4].toLowerCase().trim().equals("true");
-		} else if (args.length == 6){
-			outputfilename = args[3].toLowerCase().trim();
-			flag_lengthorEnd = args[4].toLowerCase().trim().equals("true");
-			debug = args[5].equals("true");
 		}
 
-		// Process command line non-optional inputs
-		String schemaFileLocation = args[0];
-		String datafileLocation = args[1];
-		String outputDirLocation = args[2];
-
-		// Validate the input and throw errors
-		// Rule of thumb: Don't throw exceptions on user's face! Print out understandable indication.
-
-		if (!isValid(schemaFileLocation, true)) {
+		if (!isValid(ffpOptions.getSchemalocation(), true)) {
 			System.out.println("Please validate the path of schema file!");
 			return;
 		}
 
-		if (!isValid(datafileLocation, true)) {
+		if (!isValid(ffpOptions.getDatafile(), true)) {
 			System.out.println("Please validate the path of flat file!");
 			return;
 		}
 
-		if (!isValid(outputDirLocation, false)) {
+		if (!isValid(ffpOptions.getOutputdirectory(), false)) {
 			System.out.println("Please validate the path of output JSON!");
 			return;
 		}
 
-		File schemaFile = new File(schemaFileLocation);
-		CSVParser parser;
+		CSVParser parser = null;
 		ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<>();
 
 		try {
-			parser = CSVParser.parse(schemaFile, Charset.defaultCharset(),
-					CSVFormat.DEFAULT);
+			parser = CSVParser.parse(ffpOptions.getSchemalocation(),
+					Charset.defaultCharset(), CSVFormat.DEFAULT);
 			// Parse the schema and load it into an array list
-			ArrayList<FlatFileSchema> flatFileSchema = parseSchema(flag_lengthorEnd, parser);
+			ArrayList<FlatFileSchema> flatFileSchema = parseSchema(
+					ffpOptions.isSchemaType(), parser);
 			// Start reading the data file and use schema structure to convert
 			// it
-			Scanner scanner = new Scanner(new File(datafileLocation));
+			Scanner scanner = new Scanner(ffpOptions.getDatafile());
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				if (line.length() > 0) {
@@ -85,32 +69,42 @@ public class Processor {
 		} catch (IOException ioe) {
 			System.out.println("Unable to parse the input schema CSV: "
 					+ ioe.getMessage());
-			if (debug)
+			if (ffpOptions.isDebug())
 				ioe.printStackTrace();
 		}
 
 		// Generate output in json
 
 		Gson gson = null;
+<<<<<<< HEAD
 		boolean prettyprint = true;
 
 		if(prettyprint) {
 			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+=======
+		if (ffpOptions.isPrettyPrint()) {
+			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping()
+					.create();
+>>>>>>> ae5df7fb6110d0edc165a0d0e579b61ee19aa265
 		} else {
 			gson = new GsonBuilder().disableHtmlEscaping().create();
 		}
 		try {
 			FileWriter writer;
 
-			// System.getProperty("file.separator") makes it compatible both for Unix and Windows
-			writer = new FileWriter(outputDirLocation + System.getProperty("file.separator") + outputfilename);
+			// System.getProperty("file.separator") makes it compatible both for
+			// Unix and Windows
+			writer = new FileWriter(ffpOptions.getOutputdirectory()
+					.getAbsolutePath()
+					+ System.getProperty("file.separator")
+					+ ffpOptions.getOutputfilename());
 			writer.write(gson.toJson(outputDataStructure));
 			writer.close();
 			System.out.println("OUTPUT SUCCESSFUL!");
 		} catch (IOException e) {
 			System.out.println("Unable to write input data file:"
 					+ e.getMessage());
-			if (debug)
+			if (ffpOptions.isDebug())
 				e.printStackTrace();
 		}
 	}
@@ -130,16 +124,14 @@ public class Processor {
 		outputDataStructure.add(data);
 	}
 
-	public static boolean isValid(String file, boolean isFile) {
-		File filepath = new File(file);
+	public static boolean isValid(File file, boolean isFile) {
 		if (isFile) {
-			return (filepath.exists() && filepath.isFile());
+			return (file.exists() && file.isFile());
 
 		} else {
-			return (filepath.exists() && filepath.isDirectory());
+			return (file.exists() && file.isDirectory());
 		}
 	}
-
 
 	public static void printMessage() {
 		StringBuilder message = new StringBuilder();
@@ -166,9 +158,8 @@ public class Processor {
 		} else {
 			for (CSVRecord csvRecord : parser) {
 				flatFileSchema.add(new FlatFileSchema(csvRecord.get(0), Integer
-						.parseInt(csvRecord.get(1)), Integer
-						.parseInt(csvRecord.get(2)) - Integer
-						.parseInt(csvRecord.get(1))));
+						.parseInt(csvRecord.get(1)), Integer.parseInt(csvRecord
+						.get(2)) - Integer.parseInt(csvRecord.get(1))));
 				// Length = Endpoint - Startpoint
 			}
 		}

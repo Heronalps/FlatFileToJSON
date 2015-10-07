@@ -18,68 +18,80 @@ import static org.junit.Assert.assertEquals;
 
 public class ProcessorTest {
 
-    @Test
-    public void isValidFileTest(){
-        boolean value = Processor.isValid("C:\\Users\\michael.zhang\\Dropbox\\doohickeys\\flatfileparser\\data", true);
-        assertEquals(value, false);
-    }
+	@Test
+	public void isValidFilePositiveTest() {
+		File file = new File(this.getClass().getClassLoader()
+				.getResource("DataFile.txt").getPath());
+		boolean value = Processor.isValid(file, true);
+		assertEquals(value, true);
+	}
 
-    @Test
-    public void isValidDirectoryTest(){
-        boolean value = Processor.isValid("C:\\Users\\michael.zhang\\Dropbox\\doohickeys\\flatfileparser\\data\\DataFile.txt", false);
-        assertEquals(value, false);
-    }
+	@Test
+	public void isValidFileNegativeTest() {
+		File file = new File("data");
+		boolean value = Processor.isValid(file, true);
+		assertEquals(value, false);
+	}
 
-    @Test
-    public void parseRecordAndFillDataTest(){
-        ArrayList<FlatFileSchema> ffs = new ArrayList<>();
-        ArrayList<LinkedHashMap<String, String>> mapList = new ArrayList<>();
-        String line = "srctestjava";
+	@Test
+	public void isValidDirectoryPositiveTest() {
+		File file = new File(this.getClass().getClassLoader().getResource("")
+				.getPath());
+		boolean value = Processor.isValid(file, false);
+		assertEquals(value, true);
+	}
 
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("first","src");
-        map.put("second","test");
-        map.put("third","java");
+	@Test
+	public void isValidDirectoryNegativeTest() {
+		File file = new File("../abc");
+		boolean value = Processor.isValid(file, false);
+		assertEquals(value, false);
+	}
 
-        ffs.add(new FlatFileSchema("first",0,3));
-        ffs.add(new FlatFileSchema("second",3,4));
-        ffs.add(new FlatFileSchema("third",7,4));
+	@Test
+	public void parseRecordAndFillDataTest() {
+		ArrayList<FlatFileSchema> ffs = new ArrayList<>();
+		ArrayList<LinkedHashMap<String, String>> mapList = new ArrayList<>();
+		String line = "srctestjava";
 
-        Processor.parseRecordAndFillData(ffs, mapList, line);
-        assertEquals(mapList.get(0),map);
-    }
+		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		map.put("first", "src");
+		map.put("second", "test");
+		map.put("third", "java");
 
-    @Test
-    public void parseSchemaLengthTest(){
-        ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<>();
+		ffs.add(new FlatFileSchema("first", 0, 3));
+		ffs.add(new FlatFileSchema("second", 3, 4));
+		ffs.add(new FlatFileSchema("third", 7, 4));
 
-        File schemaFile = new File("C:\\Users\\michael.zhang\\Dropbox\\doohickeys\\flatfileparser\\data\\File_Schema.csv");
-        try{
-            CSVParser parser = CSVParser.parse(schemaFile, Charset.defaultCharset(), CSVFormat.DEFAULT);
-            flatFileSchema = Processor.parseSchema(true, parser);
-            assertEquals(flatFileSchema.get(0).getFieldName(),"run-type");
-            assertEquals(flatFileSchema.get(0).getStartPosition(),0);
-            assertEquals(flatFileSchema.get(0).getLength(),7);
+		Processor.parseRecordAndFillData(ffs, mapList, line);
+		assertEquals(mapList.get(0), map);
+	}
 
-        }catch (IOException ioe){
-            ioe.getMessage();
-        }
-    }
+	@Test
+	public void parseSchemaLengthTest() throws IOException {
+		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<>();
 
-    @Test
-    public void parseSchemaEndpointTest(){
-        ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<>();
+		File schemaFile = new File(this.getClass().getClassLoader()
+				.getResource("File_Schema.csv").getPath());
+		CSVParser parser = CSVParser.parse(schemaFile,
+				Charset.defaultCharset(), CSVFormat.DEFAULT);
+		flatFileSchema = Processor.parseSchema(true, parser);
+		assertEquals(flatFileSchema.get(0).getFieldName(), "run-type");
+		assertEquals(flatFileSchema.get(0).getStartPosition(), 0);
+		assertEquals(flatFileSchema.get(0).getLength(), 7);
+	}
 
-        File schemaFile = new File("C:\\Users\\michael.zhang\\Dropbox\\doohickeys\\flatfileparser\\data\\File_Schema_End.csv");
-        try{
-            CSVParser parser = CSVParser.parse(schemaFile, Charset.defaultCharset(), CSVFormat.DEFAULT);
-            flatFileSchema = Processor.parseSchema(false, parser);
-            assertEquals(flatFileSchema.get(0).getFieldName(),"run-type");
-            assertEquals(flatFileSchema.get(0).getStartPosition(),0);
-            assertEquals(flatFileSchema.get(0).getLength(),7);
+	@Test
+	public void parseSchemaEndpointTest() throws IOException {
+		ArrayList<FlatFileSchema> flatFileSchema = new ArrayList<>();
 
-        }catch (IOException ioe){
-            ioe.getMessage();
-        }
-    }
+		File schemaFile = new File(this.getClass().getClassLoader()
+				.getResource("File_Schema_End.csv").getPath());
+		CSVParser parser = CSVParser.parse(schemaFile,
+				Charset.defaultCharset(), CSVFormat.DEFAULT);
+		flatFileSchema = Processor.parseSchema(false, parser);
+		assertEquals(flatFileSchema.get(0).getFieldName(), "run-type");
+		assertEquals(flatFileSchema.get(0).getStartPosition(), 0);
+		assertEquals(flatFileSchema.get(0).getLength(), 7);
+	}
 }
