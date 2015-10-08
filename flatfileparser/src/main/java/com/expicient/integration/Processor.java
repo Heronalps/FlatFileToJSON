@@ -70,7 +70,9 @@ public class Processor {
 			System.out.println("Unable to parse the input schema CSV: "
 					+ ioe.getMessage());
 			if (ffpOptions.isDebug())
+			{
 				ioe.printStackTrace();
+			}
 		}
 
 		// Generate output in json
@@ -98,7 +100,9 @@ public class Processor {
 			System.out.println("Unable to write input data file:"
 					+ e.getMessage());
 			if (ffpOptions.isDebug())
+			{
 				e.printStackTrace();
+			}
 		}
 	}
 

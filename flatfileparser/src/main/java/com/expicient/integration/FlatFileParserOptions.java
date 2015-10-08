@@ -2,25 +2,30 @@ package com.expicient.integration;
 
 import java.io.File;
 
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.EnumOptionHandler;
+
 
 public class FlatFileParserOptions {
-	@Option(name="-s", required=true, usage="full path of schema file")
+	public static enum Schematype {LENGTH, ENDPOINT};
+
+	@Option(name="-s", required=true, usage="full path of schema file", metaVar = "Schema CSV")
     private File schemalocation;
 
-    @Option(name="-d", required=true, usage="full path of flat file")
+    @Option(name="-d", required=true, usage="full path of flat file", metaVar = "Flat File TXT")
     private File datafile;
-    
-    @Option(name="-o", required=true, usage="full path of the output JSON file")
+
+    @Option(name="-o", required=true, usage="full path of the output JSON file", metaVar = "DIR")
     private File outputdirectory;
 
-    @Option(name="-f", usage="file name of the output JSON")
+    @Option(name="-f", usage="file name of the output JSON", metaVar = ".JSON")
     private String outputfilename = "output.json";
 
-    @Option(name="-t",usage="true -length based, false - endpoint based")
-    private boolean schemaType = true;
+    @Option(name="-t",usage="Length-based or Endpoint-based")
+    private Schematype schemaType = Schematype.LENGTH;
     
-    @Option(name="-debug",usage="Log details")
+    @Option(name="-debug",usage="Log details", hidden = true)
     private boolean debug = false;
     
     @Option(name="-prettyprint",usage="Print formatted JSON")
@@ -61,8 +66,16 @@ public class FlatFileParserOptions {
 	/**
 	 * @return the schemaType
 	 */
-	public boolean isSchemaType() {
+	public Schematype getSchemaType(){
 		return schemaType;
+	}
+
+	public boolean isSchemaType() {
+		if (this.getSchemaType().equals(Schematype.ENDPOINT)){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	/**
