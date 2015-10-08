@@ -21,7 +21,7 @@ public class FlatFileParserOptions {
     private boolean schemaType = true;
     
     @Option(name="-debug",usage="Log details")
-    private boolean debug = true;
+    private boolean debug = false;
     
     @Option(name="-prettyprint",usage="Print formatted JSON")
     private boolean prettyPrint = true;

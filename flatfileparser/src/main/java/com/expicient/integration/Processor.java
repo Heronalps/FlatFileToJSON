@@ -22,6 +22,7 @@ public class Processor {
 	public static void main(String[] args) {
 		FlatFileParserOptions ffpOptions = new FlatFileParserOptions();
 		CmdLineParser cmdLineParser = new CmdLineParser(ffpOptions);
+
 		try {
 			cmdLineParser.parseArgument(args);
 		} catch (CmdLineException cle) {
@@ -46,11 +47,10 @@ public class Processor {
 			return;
 		}
 
-		CSVParser parser = null;
 		ArrayList<LinkedHashMap<String, String>> outputDataStructure = new ArrayList<>();
 
 		try {
-			parser = CSVParser.parse(ffpOptions.getSchemalocation(),
+			CSVParser parser = CSVParser.parse(ffpOptions.getSchemalocation(),
 					Charset.defaultCharset(), CSVFormat.DEFAULT);
 			// Parse the schema and load it into an array list
 			ArrayList<FlatFileSchema> flatFileSchema = parseSchema(
@@ -75,26 +75,19 @@ public class Processor {
 
 		// Generate output in json
 
-		Gson gson = null;
-<<<<<<< HEAD
-		boolean prettyprint = true;
-
-		if(prettyprint) {
-			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-=======
-		if (ffpOptions.isPrettyPrint()) {
-			gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping()
-					.create();
->>>>>>> ae5df7fb6110d0edc165a0d0e579b61ee19aa265
-		} else {
-			gson = new GsonBuilder().disableHtmlEscaping().create();
-		}
 		try {
-			FileWriter writer;
+			Gson gson;
+			if (ffpOptions.isPrettyPrint()) {
+				gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping()
+						.create();
+
+			} else {
+				gson = new GsonBuilder().disableHtmlEscaping().create();
+			}
 
 			// System.getProperty("file.separator") makes it compatible both for
 			// Unix and Windows
-			writer = new FileWriter(ffpOptions.getOutputdirectory()
+			FileWriter writer = new FileWriter(ffpOptions.getOutputdirectory()
 					.getAbsolutePath()
 					+ System.getProperty("file.separator")
 					+ ffpOptions.getOutputfilename());
@@ -131,18 +124,6 @@ public class Processor {
 		} else {
 			return (file.exists() && file.isDirectory());
 		}
-	}
-
-	public static void printMessage() {
-		StringBuilder message = new StringBuilder();
-		message.append("Usage: java -jar flatfileparser.jar\n[schemalocation] [datafile] [outputdirectory] [outputfilename] [schematype] [debug]\n");
-		message.append("\nschemalocation: full path of schema file\n");
-		message.append("\ndatafile: full path of flat file file\n");
-		message.append("\noutputdirectory: full path of the output JSON file\n");
-		message.append("\noutputfilename {optional} (default: output.json): file name of the output JSON\n");
-		message.append("\nschematype {optional} (true|false) (default: true): true-length based, false-endpoint based\n");
-		message.append("\ndebug {optional} (true|false) (default: false): true-print backtrace, false-not print backtrace");
-		System.out.println(message.toString());
 	}
 
 	public static ArrayList<FlatFileSchema> parseSchema(boolean flag,
